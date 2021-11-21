@@ -79,7 +79,11 @@ make dynbinary \
   VERSION=$VERSION \
   GOPATH=$TMP/$SRCNAM-$VERSION/build
 
-install -D -m 0755 build/docker-linux-amd64 $PKG/usr/bin/docker
+if [ "${ARCH}" == "arm" ]; then
+  install -D -m 0755 build/docker-linux-arm $PKG/usr/bin/docker
+else
+  install -D -m 0755 build/docker-linux-amd64 $PKG/usr/bin/docker
+fi
 
 # Completion.
 ( cd contrib/completion
